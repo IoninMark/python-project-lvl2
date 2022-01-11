@@ -5,9 +5,7 @@ def generate_diff(file1, file2):
     dict1 = json.load(open(file1))
     dict2 = json.load(open(file2))
     keys = sorted(list(set(dict1) | set(dict2)))
-    result = []
-    for key in keys:
-        result.append(find_diff_by_key(dict1, dict2, key))
+    result = [find_diff_by_key(dict1, dict2, key) for key in keys]
     res_str = '\n'.join(result)
     return '{\n' + res_str + '\n}'
 
