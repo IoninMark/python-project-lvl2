@@ -1,4 +1,4 @@
-name: lint-test
+name: lint and test
 
 on:
   - push
@@ -21,3 +21,6 @@ jobs:
       - name: lint-check
         run: |
           make lint
+      - name: pytest
+        run: |
+          make test
