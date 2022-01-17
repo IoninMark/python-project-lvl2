@@ -1,23 +1,19 @@
 import json
+import yaml
+from gendiff.parser import generate_diff_str
 
 
 def generate_diff(file1, file2):
-    dict1 = json.load(open(file1))
-    dict2 = json.load(open(file2))
-    keys = sorted(list(set(dict1) | set(dict2)))
-    result = [find_diff_by_key(dict1, dict2, key) for key in keys]
-    res_str = '\n'.join(result)
-    return '{\n' + res_str + '\n}'
+    dict1 = read_file(file1)
+    dict2 = read_file(file2)
+    return generate_diff_str(dict1, dict2)
 
 
-def find_diff_by_key(dict1, dict2, key):
-    elem1 = dict1.get(key, '')
-    elem2 = dict2.get(key, '')
-    if elem1 != '' and elem2 == '':
-        return f"- {key}: {elem1}"
-    if elem2 != '' and elem1 == '':
-        return f"+ {key}: {elem2}"
-    if elem1 == elem2:
-        return f"{key}: {elem1}"
+def read_file(file_name):
+    file_format = file_name.split('.')[-1]
+    if file_format == 'json':
+        return json.load(open(file_name))
+    elif file_format == 'yml' or file_format == 'yaml':
+        return yaml.safe_load(open(file_name))
     else:
-        return f"- {key}: {elem1}\n+ {key}: {elem2}"
+        print("Wrong file format!!!")
