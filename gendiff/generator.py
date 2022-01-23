@@ -1,12 +1,12 @@
 import json
 import yaml
-from gendiff.parser import generate_diff_str
+from gendiff.parser import generate_diff_list
 
 
 def generate_diff(file1, file2):
     dict1 = read_file(file1)
     dict2 = read_file(file2)
-    return generate_diff_str(dict1, dict2)
+    return generate_diff_list(dict1, dict2)
 
 
 def read_file(file_name):

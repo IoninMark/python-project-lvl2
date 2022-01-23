@@ -1,25 +1,36 @@
-def generate_diff_str(dict1, dict2):
-    """Function generates the formatted string with difference
-    between two files."""
+NO_KEY = 'no_such_key'
+
+
+def generate_diff_list(dict1, dict2):
+    """Function compares files and generates
+    difference list.
+    [
+        {
+            'key': key_name,
+            'children': [..childs {}..], - if both are dicts
+            'same_value': val, - if values are the same
+            'file1': val1,
+            'file2': val2,
+        }
+    ]"""
     keys = sorted(list(set(dict1) | set(dict2)))
-    result = [find_diff_by_key(dict1, dict2, key) for key in keys]
-    res_str = '\n'.join(result)
-    if res_str != '':
-        return '{\n' + res_str + '\n}'
-    else:
-        return ''
+    res_list = [find_diff(dict1.get(key, NO_KEY), dict2.get(key, NO_KEY), key)
+                for key in keys]
+    return res_list
 
 
-def find_diff_by_key(dict1, dict2, key):
-    """Function compares files by key and generates
-    difference string for this key."""
-    elem1 = dict1.get(key, '')
-    elem2 = dict2.get(key, '')
-    if elem1 != '' and elem2 == '':
-        return f"- {key}: {elem1}"
-    if elem2 != '' and elem1 == '':
-        return f"+ {key}: {elem2}"
+def find_diff(elem1, elem2, parent_key):
+    if isinstance(elem1, dict) and isinstance(elem2, dict):
+        keys = sorted(list(set(elem1) | set(elem2)))
+        child_list = [
+            find_diff(elem1.get(key, NO_KEY), elem2.get(key, NO_KEY), key)
+            for key in keys]
+        return {'key': parent_key, 'children': child_list}
+    if elem1 != NO_KEY and elem2 == NO_KEY:
+        return {'key': parent_key, 'file1': elem1}
+    if elem2 != NO_KEY and elem1 == NO_KEY:
+        return {'key': parent_key, 'file2': elem2}
     if elem1 == elem2:
-        return f"{key}: {elem1}"
+        return {'key': parent_key, 'value': elem1}
     else:
-        return f"- {key}: {elem1}\n+ {key}: {elem2}"
+        return {'key': parent_key, 'file1': elem1, 'file2': elem2}

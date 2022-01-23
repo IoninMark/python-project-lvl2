@@ -1,4 +1,5 @@
 from gendiff import generate_diff
+from gendiff.stylish import stylish
 
 
 def test_generate_diff_json():
@@ -10,7 +11,7 @@ def test_generate_diff_json():
         "tests/fixtures/res_string.txt"
         )
     result = file.read()
-    assert diff == result
+    assert stylish(diff) == result
 
 
 def test_generate_diff_json_empty_files():
@@ -18,7 +19,7 @@ def test_generate_diff_json_empty_files():
         "tests/fixtures/empty_file1.json", 
         "tests/fixtures/empty_file2.json"
         )
-    assert diff == ''
+    assert stylish(diff) == ''
 
 
 def test_generate_diff_yaml():
@@ -30,7 +31,7 @@ def test_generate_diff_yaml():
         "tests/fixtures/res_string.txt"
         )
     result = file.read()
-    assert diff == result
+    assert stylish(diff) == result
 
 
 def test_generate_diff_yaml_empty_files():
@@ -38,4 +39,4 @@ def test_generate_diff_yaml_empty_files():
         "tests/fixtures/empty_file1.yaml", 
         "tests/fixtures/empty_file2.yaml"
         )
-    assert diff == ''
+    assert stylish(diff) == ''
