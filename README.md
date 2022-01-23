@@ -10,3 +10,4 @@ This program generates difference between two files.
 [![Test Coverage](https://api.codeclimate.com/v1/badges/08ebc5f8a788c65f48b1/test_coverage)](https://codeclimate.com/github/IoninMark/python-project-lvl2/test_coverage)
 [![asciicast](https://asciinema.org/a/461025.svg)](https://asciinema.org/a/461025)
 [![asciicast](https://asciinema.org/a/MoKyV82bNkijnS49S66MkXxHz.svg)](https://asciinema.org/a/MoKyV82bNkijnS49S66MkXxHz)
+[![asciicast](https://asciinema.org/a/o1twlzp4EOJdoqsYzZMeOpvwT.svg)](https://asciinema.org/a/o1twlzp4EOJdoqsYzZMeOpvwT)
