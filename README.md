@@ -1,7 +1,9 @@
 # About
 Second Hexlet Project: Difference Generator.
 
-This program generates difference between two files.
+This program generates difference between two .json or .yaml (.yml) files.
+
+2 data formats available: "stylish" and "plain"
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/IoninMark/python-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/IoninMark/python-project-lvl2/actions)

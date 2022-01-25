@@ -1,12 +1,13 @@
 import json
 import yaml
+from gendiff.formatters.stylish import stylish
 from gendiff.parser import generate_diff_list
 
 
-def generate_diff(file1, file2):
+def generate_diff(file1, file2, formatter=stylish):
     dict1 = read_file(file1)
     dict2 = read_file(file2)
-    return generate_diff_list(dict1, dict2)
+    return formatter(generate_diff_list(dict1, dict2))
 
 
 def read_file(file_name):
@@ -16,4 +17,5 @@ def read_file(file_name):
     elif file_format == 'yml' or file_format == 'yaml':
         return yaml.safe_load(open(file_name))
     else:
-        print("Wrong file format!!!")
+        raise Exception("Wrong file format!!!")
+        # print("Wrong file format!!!")
