@@ -14,3 +14,4 @@ This program generates difference between two .json or .yaml (.yml) files.
 [![asciicast](https://asciinema.org/a/MoKyV82bNkijnS49S66MkXxHz.svg)](https://asciinema.org/a/MoKyV82bNkijnS49S66MkXxHz)
 [![asciicast](https://asciinema.org/a/o1twlzp4EOJdoqsYzZMeOpvwT.svg)](https://asciinema.org/a/o1twlzp4EOJdoqsYzZMeOpvwT)
 [![asciicast](https://asciinema.org/a/0YCz6TzrHT0VdHf9dzGGmFaHc.svg)](https://asciinema.org/a/0YCz6TzrHT0VdHf9dzGGmFaHc)
+[![asciicast](https://asciinema.org/a/ejiYJq4fAKKzq1TeVPMZOJ97w.svg)](https://asciinema.org/a/ejiYJq4fAKKzq1TeVPMZOJ97w)
