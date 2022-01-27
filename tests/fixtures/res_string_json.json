@@ -1,1 +1,20 @@
-{"common": {"follow": {"file2": false}, "setting1": "Value 1", "setting2": {"file1": 200}, "setting3": {"file1": true, "file2": null}, "setting4": {"file2": "blah blah"}, "setting5": {"file2": {"key5": "value5"}}, "setting6": {"doge": {"wow": {"file1": "", "file2": "so much"}}, "key": "value", "ops": {"file2": "vops"}}}, "group1": {"baz": {"file1": "bas", "file2": "bars"}, "foo": "bar", "nest": {"file1": {"key": "value"}, "file2": "str"}}, "group2": {"file1": {"abc": 12345, "deep": {"id": 45}}}, "group3": {"file2": {"deep": {"id": {"number": 45}}, "fee": 100500}}}
+{
+    "common": {
+        "follow": {"file2": false}, 
+        "setting1": "Value 1", 
+        "setting2": {"file1": 200}, 
+        "setting3": {"file1": true, "file2": null}, 
+        "setting4": {"file2": "blah blah"}, 
+        "setting5": {"file2": {"key5": "value5"}}, 
+        "setting6": {
+            "doge": {"wow": {"file1": "", "file2": "so much"}}, 
+            "key": "value", 
+            "ops": {"file2": "vops"}}
+        }, 
+    "group1": {
+        "baz": {"file1": "bas", "file2": "bars"}, 
+        "foo": "bar", 
+        "nest": {"file1": {"key": "value"}, "file2": "str"}}, 
+    "group2": {"file1": {"abc": 12345, "deep": {"id": 45}}}, 
+    "group3": {"file2": {"deep": {"id": {"number": 45}}, "fee": 100500}}
+}
