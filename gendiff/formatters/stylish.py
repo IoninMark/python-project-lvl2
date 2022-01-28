@@ -57,7 +57,7 @@ def stringify_value(value, depth, replacer=REPLACER, space_count=SPACE_CNT):
         False: 'false'
     }
     if not isinstance(value, dict):
-        if value in replace_dict.keys():
+        if value in replace_dict.keys() and type(value) is not int:
             return replace_dict[value]
         else:
             return value
