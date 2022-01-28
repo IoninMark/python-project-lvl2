@@ -12,16 +12,16 @@ def main():
     parser.add_argument('second_file')
     parser.add_argument('--f', '--format',
                         dest='format',
-                        default=stylish,
+                        default='stylish',
                         choices=['plain', 'stylish', 'json'],
                         help='set format of output')
     args = parser.parse_args()
     if args.format == 'plain':
-        print(generate_diff(args.first_file, args.second_file, plain))
+        print(generate_diff(args.first_file, args.second_file, 'plain'))
     elif args.format == 'json':
-        print(generate_diff(args.first_file, args.second_file, _json))
+        print(generate_diff(args.first_file, args.second_file, '_json'))
     else:
-        print(generate_diff(args.first_file, args.second_file, stylish))
+        print(generate_diff(args.first_file, args.second_file, 'stylish'))
 
 
 if __name__ == '__main__':
