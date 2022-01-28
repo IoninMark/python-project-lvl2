@@ -19,7 +19,7 @@ def test_generate_diff_plain_json():
     diff = generate_diff(
         "tests/fixtures/file1.json", 
         "tests/fixtures/file2.json",
-        plain
+        'plain'
         )
     file = open(
         "tests/fixtures/res_string_plain.txt"
@@ -32,7 +32,7 @@ def test_generate_diff_json_json():
     diff = generate_diff(
         "tests/fixtures/file1.json", 
         "tests/fixtures/file2.json",
-        _json
+        'json'
         )
     file = open(
         "tests/fixtures/res_string_json.txt"
@@ -67,7 +67,7 @@ def test_generate_diff_plain_yaml():
     diff = generate_diff(
         "tests/fixtures/file1.yaml", 
         "tests/fixtures/file2.yaml",
-        plain
+        'plain'
         )
     file = open(
         "tests/fixtures/res_string_plain.txt"
