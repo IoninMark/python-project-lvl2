@@ -3,37 +3,39 @@ import itertools
 
 REPLACER = '  '
 SPACE_CNT = 1
-NO_VAL = 'NO_SUCH_VALUE'
+
 
 # flake8: noqa: C901
 def stylish(diff_list, replacer=REPLACER, space_count=SPACE_CNT):
 
     def stringify(current_item, depth):
+        item_keys = list(current_item.keys())
         key = current_item.get('key')
-        children = current_item.get('children', NO_VAL)
-        value = current_item.get('value', NO_VAL)
-        value1 = current_item.get('file1', NO_VAL)
-        value2 = current_item.get('file2', NO_VAL)
         deep_indent_size = depth + space_count
         deep_indent = replacer * deep_indent_size
         changed_list = []
         res_str = ''
-        if value != NO_VAL:
+        if 'value' in item_keys:
+            value = current_item.get('value')
             val = stringify_value(value, depth + 2)
             return f"{deep_indent}  {key}: {val}"
 
-        if children != NO_VAL:
+        if 'children' in item_keys:
+            children = current_item.get('children')
             indent = replacer * (depth + 2)
             new_lines = [stringify(item, depth + 2) for item in children]
             child_str = '{\n' + '\n'.join(new_lines) + '\n' + indent + '}'
             res_str = f"{deep_indent}  {key}: {child_str}"
             return res_str
 
-        if value1 != NO_VAL:
+        if 'file1' in item_keys:
+            value1 = current_item.get('file1')
             val1 = stringify_value(value1, depth + 2)
             file1_str = f"{deep_indent}- {key}: {val1}"
             changed_list.append(file1_str)
-        if value2 != NO_VAL:
+
+        if 'file2' in item_keys:
+            value2 = current_item.get('file2')
             val2 = stringify_value(value2, depth + 2)
             file2_str = f"{deep_indent}+ {key}: {val2}"
             changed_list.append(file2_str)
@@ -49,8 +51,16 @@ def stylish(diff_list, replacer=REPLACER, space_count=SPACE_CNT):
 
 def stringify_value(value, depth, replacer=REPLACER, space_count=SPACE_CNT):
     """Function stringifies value if it is a dict"""
+    replace_dict = {
+        None: 'null',
+        True: 'true',
+        False: 'false'
+    }
     if not isinstance(value, dict):
-        return value
+        if value in replace_dict.keys():
+            return replace_dict[value]
+        else:
+            return value
     space = depth + space_count * 2
     new_indent = replacer * space
     current_indent = replacer * depth

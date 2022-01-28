@@ -35,7 +35,7 @@ def test_generate_diff_json_json():
         _json
         )
     file = open(
-        "tests/fixtures/res_string_json.json"
+        "tests/fixtures/res_string_json.txt"
         )
         
     result_dict = json.load(file)

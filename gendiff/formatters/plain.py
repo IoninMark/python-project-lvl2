@@ -4,8 +4,8 @@ NO_VAL = 'NO_SUCH_VALUE'
 def plain(diff_list):
 
     def stringify_plain(current_item, parent_key=''):
+        item_keys = list(current_item.keys())
         current_key = current_item.get('key')
-        children = current_item.get('children', NO_VAL)
         value1 = current_item.get('file1', NO_VAL)
         value2 = current_item.get('file2', NO_VAL)
         if parent_key:
@@ -13,10 +13,11 @@ def plain(diff_list):
         else:
             key = current_key
 
-        if children != NO_VAL:
+        if 'children' in item_keys:
+            children = current_item.get('children')
             new_lines = [stringify_plain(item, key) 
                 for item in children 
-                if item.get('value', NO_VAL) == NO_VAL]
+                if 'value' not in item.keys()]
             child_str = '\n'.join(new_lines)
             return child_str
 
@@ -37,16 +38,24 @@ def plain(diff_list):
     if diff_list:
         lines = [stringify_plain(item) 
             for item in diff_list 
-            if item.get('value', NO_VAL) == NO_VAL]
+            if 'value' not in item.keys()]
         result = '\n'.join(lines)
     return result
 
 
 def stringify_value(value):
     """Function stringifies value if it is a dict"""
+    replace_dict = {
+        None: 'null',
+        True: 'true',
+        False: 'false'
+    }
     if isinstance(value, dict):
         return '[complex value]'
     elif isinstance(value, str):
         return f"'{value}'"
     else:
-        return value
+        if value in replace_dict.keys():
+            return replace_dict[value]
+        else:
+            return value
