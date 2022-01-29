@@ -36,7 +36,6 @@ def test_generate_diff_json_json():
     file = open(
         "tests/fixtures/res_string_json.txt"
     )
-        
     result_dict = json.load(file)
     diff_dict = json.loads(diff)
     assert diff_dict == result_dict
