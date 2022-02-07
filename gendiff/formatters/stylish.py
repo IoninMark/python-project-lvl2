@@ -1,3 +1,4 @@
+from hashlib import new
 from gendiff.formatters.stringify import stringify_styl_value
 
 
@@ -8,41 +9,24 @@ SPACE_CNT = 1
 # flake8: noqa: C901
 def stylish(diff_list, replacer=REPLACER, space_count=SPACE_CNT):
 
-    def stringify(current_item, depth):
-        key = current_item.get('key')
-        item_type = current_item.get('type')
+    def format(item, depth):
+        key = item.get('key').get('value')
+        item_type = item.get('key').get('type')
         deep_indent_size = depth + space_count
         deep_indent = replacer * deep_indent_size
         res_str = ''
-        if item_type == 'equal':
-            value = current_item.get('value')
-            val = stringify_styl_value(value, depth + 2, REPLACER, SPACE_CNT)
-            return f"{deep_indent}  {key}: {val}"
 
-        elif item_type == 'dict':
-            children = current_item.get('children')
+        if item_type == 'dict':
+            children = item.get('children')
             indent = replacer * (depth + 2)
-            new_lines = [stringify(item, depth + 2) for item in children]
+            new_lines = [format(child, depth + 2) for child in children]
             child_str = '{\n' + '\n'.join(new_lines) + '\n' + indent + '}'
             res_str = f"{deep_indent}  {key}: {child_str}"
             return res_str
 
-        elif item_type == 'removed':
-            value1 = current_item.get('file1')
-            val1 = stringify_styl_value(value1, depth + 2, REPLACER, SPACE_CNT)
-            res_str = f"{deep_indent}- {key}: {val1}"
-            #changed_list.append(file1_str)
-            return res_str
-
-        elif item_type == 'added':
-            value2 = current_item.get('file2')
-            val2 = stringify_styl_value(value2, depth + 2, REPLACER, SPACE_CNT)
-            res_str = f"{deep_indent}+ {key}: {val2}"
-            return res_str
-        
-        else:
-            value1 = current_item.get('file1')
-            value2 = current_item.get('file2')
+        if item_type == 'updated':
+            value1 = item.get('value').get('old_val')
+            value2 = item.get('value').get('new_val')
             val1 = stringify_styl_value(value1, depth + 2, REPLACER, SPACE_CNT)
             val2 = stringify_styl_value(value2, depth + 2, REPLACER, SPACE_CNT)
             res_str1 = f"{deep_indent}- {key}: {val1}"
@@ -50,8 +34,22 @@ def stylish(diff_list, replacer=REPLACER, space_count=SPACE_CNT):
             res_str = res_str1 + '\n' + res_str2
             return res_str
 
+        value = item.get('value')
+        val = stringify_styl_value(value, depth + 2, REPLACER, SPACE_CNT)
+
+        if item_type == 'equal':
+            return f"{deep_indent}  {key}: {val}"
+
+        if item_type == 'removed':
+            res_str = f"{deep_indent}- {key}: {val}"
+            return res_str
+
+        if item_type == 'added':
+            res_str = f"{deep_indent}+ {key}: {val}"
+            return res_str
+
     result = ''
     if diff_list:
-        lines = [stringify(item, 0) for item in diff_list]
+        lines = [format(elem, 0) for elem in diff_list]
         result = '{\n' + '\n'.join(lines) + '\n}'
     return result

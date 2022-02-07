@@ -5,33 +5,36 @@ import json
 # flake8: noqa: C901
 def _json(diff_list):
 
-    def make_dict(current_item, dictionary):
-        key = current_item.get('key')
-        item_type = current_item.get('type')
-        changed_dict = {}
+    def format(item, dictionary):
+        key = item.get('key').get('value')
+        item_type = item.get('key').get('type')
         child_dict = {}
-        if item_type == 'equal':
-            value = current_item.get('value')
-            dictionary[key] = value
-            return
-       
+        
         if item_type == 'dict':
-            children = current_item.get('children')
+            children = item.get('children')
             for child in children:
-                make_dict(child, child_dict)
+                format(child, child_dict)
             dictionary[key] = child_dict
             return
-
-        if item_type == 'removed' or item_type == 'updated':
-            value1 = current_item.get('file1')
-            changed_dict['file1'] = value1
-        if item_type == 'added' or item_type == 'updated':
-            value2 = current_item.get('file2')
-            changed_dict['file2'] = value2
-        dictionary[key] = changed_dict
+        
+        if item_type == 'updated':
+            value1 = item.get('value').get('old_val')
+            value2 = item.get('value').get('new_val')
+            dictionary[key] = {
+                'type': item_type,
+                'old_value': value1,
+                'new_value': value2
+                }
+            return
+        
+        value = item.get('value')
+        dictionary[key] = {
+                'type': item_type,
+                'value': value
+                }
         return
     
     res_dict = {}
-    for item in diff_list:
-        make_dict(item, res_dict)
+    for elem in diff_list:
+        format(elem, res_dict)
     return json.dumps(res_dict)

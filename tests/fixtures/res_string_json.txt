@@ -1,20 +1,20 @@
 {
     "common": {
-        "follow": {"file2": false}, 
-        "setting1": "Value 1", 
-        "setting2": {"file1": 200}, 
-        "setting3": {"file1": true, "file2": null}, 
-        "setting4": {"file2": "blah blah"}, 
-        "setting5": {"file2": {"key5": "value5"}}, 
+        "follow": {"type": "added", "value": false}, 
+        "setting1": {"type": "equal", "value": "Value 1"}, 
+        "setting2": {"type": "removed", "value": 200}, 
+        "setting3": {"type": "updated", "old_value": true, "new_value": null}, 
+        "setting4": {"type": "added", "value": "blah blah"}, 
+        "setting5": {"type": "added", "value": {"key5": "value5"}}, 
         "setting6": {
-            "doge": {"wow": {"file1": "", "file2": "so much"}}, 
-            "key": "value", 
-            "ops": {"file2": "vops"}}
-        }, 
+            "doge": {"wow": {"type": "updated", "old_value": "", "new_value": "so much"}}, 
+            "key": {"type": "equal", "value": "value"}, 
+            "ops": {"type": "added", "value": "vops"}}
+            }, 
     "group1": {
-        "baz": {"file1": "bas", "file2": "bars"}, 
-        "foo": "bar", 
-        "nest": {"file1": {"key": "value"}, "file2": "str"}}, 
-    "group2": {"file1": {"abc": 12345, "deep": {"id": 45}}}, 
-    "group3": {"file2": {"deep": {"id": {"number": 45}}, "fee": 100500}}
+        "baz": {"type": "updated", "old_value": "bas", "new_value": "bars"}, 
+        "foo": {"type": "equal", "value": "bar"}, 
+        "nest": {"type": "updated", "old_value": {"key": "value"}, "new_value": "str"}}, 
+    "group2": {"type": "removed", "value": {"abc": 12345, "deep": {"id": 45}}}, 
+    "group3": {"type": "added", "value": {"deep": {"id": {"number": 45}}, "fee": 100500}}
 }
