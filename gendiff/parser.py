@@ -1,11 +1,14 @@
-import json
-import yaml
+from gendiff.file_reader import read_json_file, read_yaml_file
 
 
-def get_dict(file_name, format):
+def parse(file_name, format):
     if format == 'json':
-        return json.load(open(file_name))
+        return read_json_file(file_name)
     elif format == 'yml' or format == 'yaml':
-        return yaml.safe_load(open(file_name))
+        return read_yaml_file(file_name)
     else:
         raise Exception("Wrong file format!!!")
+
+
+def get_format(file_name):
+    return file_name.split('.')[-1]
