@@ -10,12 +10,12 @@ def generate_diff(file1, file2, formatter='stylish'):
     dict1 = parse(read_file(file1), file1_format)
     dict2 = parse(read_file(file2), file2_format)
     format_func = get_formatter(formatter)
-    return format_func(generate_diff_list(dict1, dict2))
+    return format_func(generate_diff_dict(dict1, dict2))
 
 
-def generate_diff_list(dict1, dict2):
+def generate_diff_dict(dict1, dict2):
     """Function compares files and generates
-    difference list.
+    difference dictionary.
         {
             'key': {
                 'type': equal/dict/removed/added/updated,
@@ -56,7 +56,7 @@ def generate_diff_list(dict1, dict2):
             if isinstance(elem1, dict) and isinstance(elem2, dict):
                 result[com_key] = {
                     'type': 'dict',
-                    'children': generate_diff_list(elem1, elem2)
+                    'children': generate_diff_dict(elem1, elem2)
                 }
             else:
                 result[com_key] = {
