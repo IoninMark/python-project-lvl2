@@ -1,27 +1,27 @@
 from gendiff.formatters.stringify import stringify_plain_value
 
 # flake8: noqa: C901
-def format(diff_list):
+def format(diff):
 
     def stringify(item, parent_key=''):
-        current_key = list(item.keys())[0]
-        item_type = item.get(current_key).get('type')
+        current_key, item_value = item
+        item_type = item_value.get('type')
         if parent_key:
             key = f"{parent_key}.{current_key}"
         else:
             key = current_key
 
         if item_type == 'dict':
-            children = item.get(current_key).get('children')
+            children = item_value.get('children')
             new_lines = [stringify(child, key) 
-                for child in children
-                if list(child.values())[0].get('type') != 'equal']
+                for child in list(children.items())
+                if child[1].get('type') != 'equal']
             child_str = '\n'.join(new_lines)
             return child_str
         
         if item_type == 'updated':
-            value1 = item.get(current_key).get('old_val')
-            value2 = item.get(current_key).get('new_val')
+            value1 = item_value.get('old_val')
+            value2 = item_value.get('new_val')
             val1 = stringify_plain_value(value1)
             val2 = stringify_plain_value(value2)
             res_str = f"Property '{key}' was updated. From {val1} to {val2}"
@@ -32,15 +32,15 @@ def format(diff_list):
             return res_str
 
         if item_type == 'added':
-            value = item.get(current_key).get('value')
+            value = item_value.get('value')
             val = stringify_plain_value(value)
             res_str = f"Property '{key}' was added with value: {val}"
             return res_str
 
     result = ''
-    if diff_list:
+    if diff:
         lines = [stringify(elem) 
-            for elem in diff_list
-            if list(elem.values())[0].get('type') != 'equal']
+            for elem in list(diff.items())
+            if elem[1].get('type') != 'equal']
         result = '\n'.join(lines)
     return result
