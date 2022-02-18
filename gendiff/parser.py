@@ -9,7 +9,3 @@ def parse(data, format):
         return yaml.safe_load(data)
     else:
         raise Exception("Wrong file format!!!")
-
-
-def get_format(file_name):
-    return file_name.split('.')[-1]

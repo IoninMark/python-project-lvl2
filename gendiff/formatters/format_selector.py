@@ -1,10 +1,12 @@
 from gendiff.formatters import stylish, plain, _json
 
 
-def get_formatter(formatter='stylish'):
+def get_formatter(formatter):
     if formatter == 'stylish':
         return stylish.format
-    if formatter == 'plain':
+    elif formatter == 'plain':
         return plain.format
-    if formatter == 'json':
+    elif formatter == 'json':
         return _json.format
+    else:
+        raise Exception("Wrong formatter!!!")

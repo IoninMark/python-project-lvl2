@@ -13,12 +13,7 @@ def main():
                         choices=['plain', 'stylish', 'json'],
                         help='set format of output')
     args = parser.parse_args()
-    if args.format == 'plain':
-        print(generate_diff(args.first_file, args.second_file, 'plain'))
-    elif args.format == 'json':
-        print(generate_diff(args.first_file, args.second_file, 'json'))
-    else:
-        print(generate_diff(args.first_file, args.second_file, 'stylish'))
+    print(generate_diff(args.first_file, args.second_file, args.format))
 
 
 if __name__ == '__main__':
