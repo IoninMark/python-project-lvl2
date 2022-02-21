@@ -3,9 +3,9 @@ import yaml
 
 
 def parse(data, format):
-    if format == 'json':
+    if format == '.json':
         return json.load(data)
-    elif format == 'yml' or format == 'yaml':
+    elif format == '.yml' or format == '.yaml':
         return yaml.safe_load(data)
     else:
         raise Exception("Wrong file format!!!")

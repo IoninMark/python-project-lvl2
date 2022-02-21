@@ -1,4 +1,3 @@
-from gendiff.formatters.stringify_plain import stringify_value
 from gendiff.diff_dict_generator import ADDED, DICT, EQUAL, REMOVED, UPDATED
 
 # flake8: noqa: C901
@@ -45,3 +44,21 @@ def format(diff):
             if elem[1].get('type') != EQUAL]
         result = '\n'.join(lines)
     return result
+
+
+def stringify_value(value):
+    """Function stringifies value if it is a dict"""
+    replace_dict = {
+        None: 'null',
+        True: 'true',
+        False: 'false'
+    }
+    if isinstance(value, dict):
+        return '[complex value]'
+    elif isinstance(value, str):
+        return f"'{value}'"
+    else:
+        if value in replace_dict.keys() and type(value) is not int:
+            return replace_dict[value]
+        else:
+            return value
